@@ -3,6 +3,7 @@ import sys
 import gflags
 
 def main(argv):
+    print 'main()'
     # Let the gflags module process the command-line arguments
     try:
         argv = gflags.FLAGS(argv)
@@ -13,7 +14,7 @@ def main(argv):
     args = {
         'granularity':'best',
         }
-    print Latitude.location().list(**args).execute()
+    locations = Latitude.location().list(**args).execute()
+    import pdb; pdb.set_trace()
 
-if __name__ == '__main__':
-    main(sys.argv)
+main(sys.argv)
