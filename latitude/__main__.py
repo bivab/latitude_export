@@ -3,7 +3,8 @@ import sys
 from datetime import date, timedelta
 
 from latitude.client import Latitude
-from latitude.data import JSON
+from latitude.data.json import JSON
+from latitude.data.kml import KML
 from latitude.exporter.filesystem import FileSystem
 
 gflags.DEFINE_boolean('debug', False, 'produces debugging output')
@@ -19,10 +20,8 @@ def main(argv):
         sys.exit(1)
     some_date = date.today() - timedelta(days=1)
     locations = Latitude().locations(some_date)
-    #.location().list(**args)
-    json = JSON(locations, some_date)
-    #kml = KML(locations)
-    FileSystem().write(json)
+    for d in [cls(locations, some_date) for cls in [JSON, KML]]:
+        FileSystem().write(d)
 
     if gflags.FLAGS.debug:
         import pdb; pdb.set_trace()
