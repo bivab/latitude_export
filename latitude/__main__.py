@@ -6,6 +6,7 @@ from latitude.client import Latitude
 from latitude.data.json import JSON
 from latitude.data.kml import KML
 from latitude.exporter.filesystem import FileSystem
+from latitude.exporter.dropbox import Dropbox
 
 gflags.DEFINE_boolean('debug', False, 'produces debugging output')
 
@@ -20,8 +21,10 @@ def main(argv):
         sys.exit(1)
     some_date = date.today() - timedelta(days=1)
     locations = Latitude().locations(some_date)
+    exporters = [FileSystem(), Dropbox()]
     for d in [cls(locations, some_date) for cls in [JSON, KML]]:
-        FileSystem().write(d)
+        for e in exporters:
+            e.write(d)
 
     if gflags.FLAGS.debug:
         import pdb; pdb.set_trace()
