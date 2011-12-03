@@ -6,3 +6,4 @@ class JSON(Data):
     def __str__(self):
         json = __import__('json')
         return json.dumps(self.data)
+format = JSON

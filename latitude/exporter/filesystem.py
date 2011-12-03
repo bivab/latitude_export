@@ -2,7 +2,7 @@ import os
 from latitude.config import config
 from latitude.exporter import Exporter
 
-class FileSystem(Exporter):
+class Filesystem(Exporter):
     def __init__(self):
         pass
 
@@ -22,3 +22,4 @@ class FileSystem(Exporter):
             assert not os.path.exists(path)
             os.makedirs(path)
         return path
+exporter = Filesystem

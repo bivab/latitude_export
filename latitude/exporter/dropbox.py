@@ -17,3 +17,4 @@ class Dropbox(Exporter):
                                     d.month, sep,
                                     d.day, data.extension)
         return path
+exporter = Dropbox

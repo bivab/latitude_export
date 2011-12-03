@@ -1,3 +1,23 @@
 import ConfigParser
+import os
 config = ConfigParser.ConfigParser()
 config.read('latitude/settings.ini') # make the path relate to the app and not the user
+
+# create datadir
+datadir = config.get('LatitudeExporter', 'datadir')
+datadir = os.path.expanduser(datadir)
+if not os.path.exists(datadir):
+    os.makedirs(datadir)
+assert os.path.isdir(datadir)
+
+def exporters():
+    exporters = config.get('LatitudeExporter', 'exporters')
+    exporters = [x.strip() for x in exporters.split(',')]
+    return [__import__('latitude.exporter.%s' % e, {}, {}, ['exporter']).exporter
+                                            for e in exporters]
+def formats():
+    formats = config.get('LatitudeExporter', 'formats')
+    formats = [x.strip() for x in formats.split(',')]
+    return [__import__('latitude.data.%s' % f, {}, {}, ['format']).format
+                                            for f in formats]
+

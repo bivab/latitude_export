@@ -117,3 +117,5 @@ class KML(Data):
         contents = output.getvalue()
         output.close()
         return contents
+
+format = KML
