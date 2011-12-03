@@ -1,7 +1,7 @@
 from datetime import datetime
 import time
 
-from latitude.gdata import build
+from latitude.config.gdata import build
 
 _latitude = build("latitude", "v1")
 

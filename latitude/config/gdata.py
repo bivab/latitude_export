@@ -12,7 +12,7 @@ from latitude.config import config
 def get_storage_path():
     storage = config.get('OAuth', 'storage')
     dirname = os.path.dirname(os.path.realpath(__file__))
-    storage_path = os.path.join(dirname, storage)
+    storage_path = os.path.join(dirname, '..', storage)
     return storage_path
 
 storage = Storage(get_storage_path())
