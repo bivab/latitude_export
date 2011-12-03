@@ -1,9 +1,11 @@
 from __future__ import division
-from latitude.data import Data
 from datetime import datetime
+from latitude.config import config
+from latitude.data import Data
+
+import StringIO
 import pytz
 import xml.etree.ElementTree as ET
-from latitude.config import config
 
 local_tz = config.get('KML', 'timezone')
 local_tz = pytz.timezone(local_tz)
@@ -108,6 +110,10 @@ class KML(Data):
         return event.strftime("%Y-%m-%dT%H:%M:%S")
         #return event.strftime("%Y-%m-%dT%H:%M:%S%z")
 
-    def write(self, filename):
+    def __str__(self):
         root = self.prepare()
-        root.write(filename, xml_declaration=True)
+        output = StringIO.StringIO()
+        root.write(output)
+        contents = output.getvalue()
+        output.close()
+        return contents

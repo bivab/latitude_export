@@ -3,10 +3,6 @@ from latitude.data import Data
 class JSON(Data):
     extension = 'json'
 
-    def prepare(self):
+    def __str__(self):
         json = __import__('json')
         return json.dumps(self.data)
-
-    def write(self, filename):
-        with open(filename, 'w') as f:
-            f.write(self.prepare())

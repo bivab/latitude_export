@@ -8,7 +8,8 @@ class FileSystem(object):
     def write(self, data):
         path = self.prepare_path(data)
         filename = "%s%s.%s" % (path, data.date.day, data.extension)
-        data.write(filename)
+        with open(filename, 'w') as f:
+            f.write(str(data))
 
     def prepare_path(self, data):
         d = data.date

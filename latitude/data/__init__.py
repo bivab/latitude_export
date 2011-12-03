@@ -10,6 +10,5 @@ class Data(object):
     def extension(self):
         raise NotImplementedError
 
-    def write(self, filename):
+    def __str__(self):
         raise NotImplementedError
-
