@@ -21,3 +21,8 @@ def formats():
     return [__import__('latitude.data.%s' % f, {}, {}, ['format']).format
                                             for f in formats]
 
+def get_storage_path(storage):
+    dirname = datadir
+    storage_path = os.path.join(dirname, storage)
+    return storage_path
+

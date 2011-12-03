@@ -6,16 +6,10 @@ from apiclient.discovery import build
 from apiclient.ext.file import Storage
 from oauth2client.client import OAuth2WebServerFlow
 from oauth2client.tools import run
-from latitude.config import config
+from latitude.config import config, datadir, get_storage_path
 
 
-def get_storage_path():
-    storage = config.get('OAuth', 'storage')
-    dirname = os.path.dirname(os.path.realpath(__file__))
-    storage_path = os.path.join(dirname, '..', storage)
-    return storage_path
-
-storage = Storage(get_storage_path())
+storage = Storage(get_storage_path(config.get('OAuth', 'storage')))
 credentials = storage.get()
 if credentials is None or credentials.invalid == True:
     flow = OAuth2WebServerFlow(

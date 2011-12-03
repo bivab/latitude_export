@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 from dropbox import client, rest, session
-from latitude.config import config
+from latitude.config import config, get_storage_path
 
 import json
 import os
@@ -13,14 +13,8 @@ def get_client():
     sess = get_session()
     return client.DropboxClient(sess)
 
-def get_token_storage():
-    storage = config.get('Dropbox', 'storage')
-    dirname = os.path.dirname(os.path.realpath(__file__))
-    storage_path = os.path.join(dirname, '..', storage)
-    return storage_path
-
 def load_stored_token():
-    path = get_token_storage()
+    path = get_storage_path(config.get('Dropbox', 'storage'))
     if not os.path.isfile(path):
         return
     with open(path, 'r') as f:
@@ -30,7 +24,8 @@ def load_stored_token():
 
 def store_token(token):
     data = {'key': token.key, 'secret': token.secret}
-    path = get_token_storage()
+    path = get_storage_path(config.get('Dropbox', 'storage'))
+
     with open(path, 'w') as f:
         f.write(json.dumps(data))
 
