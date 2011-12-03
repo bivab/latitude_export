@@ -1,14 +1,18 @@
 from datetime import datetime
 import time
 
-from latitude.config.gdata import build
+from latitude.config.gdata import setup as gdata_setup, build
 
-_latitude = build("latitude", "v1")
 
 class Latitude(object):
+    _service = None
+    def __init__(self):
+        if Latitude._service is None:
+            gdata_setup()
+            Latitude._service = build("latitude", "v1")
     def locations(self, date, options=None):
         args = self.build_args(date, options)
-        loc =  _latitude.location().list(**args)
+        loc =  Latitude._service.location().list(**args)
         return loc.execute()
 
     def build_args(self, date, options=None):
