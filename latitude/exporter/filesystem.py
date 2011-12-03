@@ -1,7 +1,8 @@
 import os
 from latitude.config import config
+from latitude.exporter import Exporter
 
-class FileSystem(object):
+class FileSystem(Exporter):
     def __init__(self):
         pass
 
