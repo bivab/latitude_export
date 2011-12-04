@@ -1,7 +1,9 @@
 import ConfigParser
 import os
+SETTINGS = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'settings.ini'))
+
 config = ConfigParser.ConfigParser()
-config.read('latitude/settings.ini') # make the path relate to the app and not the user
+config.read(SETTINGS)
 
 # create datadir
 datadir = config.get('LatitudeExporter', 'datadir')
