@@ -1,6 +1,5 @@
 import apiclient.discovery
 import httplib2
-import pickle
 import os
 from apiclient.discovery import build
 from apiclient.ext.file import Storage
