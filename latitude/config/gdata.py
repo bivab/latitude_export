@@ -2,7 +2,7 @@ import apiclient.discovery
 import httplib2
 import os
 from apiclient.discovery import build
-from apiclient.ext.file import Storage
+from oauth2client.file import Storage
 from oauth2client.client import OAuth2WebServerFlow
 from oauth2client.tools import run
 from latitude.config import config, datadir, get_storage_path
