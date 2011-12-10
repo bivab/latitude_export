@@ -90,7 +90,9 @@ class KML(Data):
         track = ET.SubElement(placemark, "gx:Track" )
         am = ET.SubElement(track, "altitudeMode")
         am.text = "clampToGround"
-        #XXX propper error handling
+        # check if we have items to process
+        if 'items' not in self.data:
+            return
         # collect and sort entries
         entries = []
         for entry in self.data['items']:
