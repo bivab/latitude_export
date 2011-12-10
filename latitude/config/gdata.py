@@ -20,7 +20,8 @@ def setup():
             scope=config.get('OAuth','scope'),
             user_agent=config.get('OAuth','user_agent'))
         credentials = run(flow, storage)
-
+    if credentials.access_token_expired:
+        print 'Credentials expired'
     http = credentials.authorize(http)
 
 def build(*args):
