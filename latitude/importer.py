@@ -20,12 +20,21 @@ class Importer(object):
     exporters = [cls() for cls in config.exporters()]
     formats = config.formats()
 
+    def message(self):
+        raise NotImplementedError
+
+    def run(self):
+        raise NotImplementedError
+
 class BatchImporter(Importer):
     """Import all google latitude information
     on a day by day basis starting at
     a given day up to the current date"""
     def __init__(self, date):
         self.start_date = self.parse_date(date)
+
+    def message(self):
+        return 'Running batch import starting %s' % self.start_date
 
     def parse_date(self, d):
         d = [int(_) for _ in d.split('/')]
@@ -43,6 +52,8 @@ class YesterdayImporter(Importer):
     """Import the Google latitude location information
     for the previous day and"""
 
+    def message(self):
+        return 'Runnig import for yesterdays locations'
     def run(self):
         some_date = date.today() - timedelta(days=1)
         locations = Latitude().locations(some_date)

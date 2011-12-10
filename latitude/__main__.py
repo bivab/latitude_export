@@ -20,5 +20,7 @@ def main(argv):
         task = BatchImporter(date)
     else:
         task = YesterdayImporter()
+    print task.message()
     task.run()
+    print 'Done'
 main(sys.argv)
