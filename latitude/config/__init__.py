@@ -28,3 +28,4 @@ def get_storage_path(storage):
     storage_path = os.path.join(dirname, storage)
     return storage_path
 
+DEBUG = config.get('LatitudeExporter', 'debug').lower() == 'true'
