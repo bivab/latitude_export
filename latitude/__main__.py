@@ -1,6 +1,7 @@
 import gflags
 import sys
 from latitude.importer import BatchImporter, YesterdayImporter
+from latitude.notification import task_notification
 
 # Define command line flags
 gflags.DEFINE_string('import',
@@ -20,7 +21,6 @@ def main(argv):
         task = BatchImporter(date)
     else:
         task = YesterdayImporter()
-    print task.message()
-    task.run()
-    print 'Done'
+    with task_notification(task) as _:
+        task.run()
 main(sys.argv)
