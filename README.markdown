@@ -27,7 +27,7 @@ date from which you want to start importing your data
 ## Setup:
 You need to register the application at Google, and Dropbox in case you want to export
 to Dropbox, the corresponding key and secrets for the applications go in
-latitude/settings.inc.
+latitude/settings.ini.
 
 ## Configuration:
 Besides the application information for Google and Dropbox there are several
