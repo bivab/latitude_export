@@ -43,6 +43,8 @@ def main(argv):
     setup_config()
     run()
 
+def entry_point():
+    main(sys.argv)
 
 if __name__ == '__main__':
     main(sys.argv)
