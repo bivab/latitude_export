@@ -1,13 +1,36 @@
 import gflags
 import sys
-from latitude.importer import BatchImporter, YesterdayImporter
-from latitude.notification import task_notification
 
 # Define command line flags
 gflags.DEFINE_string('import',
                     None,
                     'Import past data, provide date as YYYY/MM/DD',
                     short_name='i')
+# Define command line flags
+gflags.DEFINE_string('config',
+                    None,
+                    'Configuration file',
+                    short_name='c')
+
+def setup_config():
+    from latitude import config
+    if getattr(gflags.FLAGS, 'config') is not None:
+        config_file = gflags.FLAGS['config'].value
+        config.setup(config_file)
+    else:
+        config.setup()
+
+def run():
+    from latitude.importer import BatchImporter, YesterdayImporter
+    from latitude.notification import task_notification
+
+    if getattr(gflags.FLAGS, 'import') is not None:
+        date = gflags.FLAGS['import'].value
+        task = BatchImporter(date)
+    else:
+        task = YesterdayImporter()
+    with task_notification(task) as _:
+        task.run()
 
 def main(argv):
     # Let the gflags module process the command-line arguments
@@ -16,11 +39,10 @@ def main(argv):
     except gflags.FlagsError, e:
         print '%s\nUsage: %s ARGS\n%s' % (e, argv[0], gflags.FLAGS)
         sys.exit(1)
-    if getattr(gflags.FLAGS, 'import') is not None:
-        date = gflags.FLAGS['import'].value
-        task = BatchImporter(date)
-    else:
-        task = YesterdayImporter()
-    with task_notification(task) as _:
-        task.run()
-main(sys.argv)
+
+    setup_config()
+    run()
+
+
+if __name__ == '__main__':
+    main(sys.argv)

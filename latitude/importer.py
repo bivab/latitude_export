@@ -1,5 +1,5 @@
 from datetime import date, timedelta
-from latitude import config
+from latitude.config import config
 from latitude.client import Latitude
 from latitude.data.json import JSON
 from latitude.data.kml import KML

@@ -5,13 +5,13 @@ from apiclient.discovery import build
 from oauth2client.file import Storage
 from oauth2client.client import OAuth2WebServerFlow
 from oauth2client.tools import run
-from latitude.config import config, datadir, get_storage_path, DEBUG
+from latitude.config import config
 
 
 http = httplib2.Http()
 def setup():
     global http
-    storage = Storage(get_storage_path(config.get('OAuth', 'storage')))
+    storage = Storage(config.get_storage_path(config.get('OAuth', 'storage')))
     credentials = storage.get()
     if credentials is None or credentials.invalid == True:
         flow = OAuth2WebServerFlow(
@@ -20,7 +20,7 @@ def setup():
             scope=config.get('OAuth','scope'),
             user_agent=config.get('OAuth','user_agent'))
         credentials = run(flow, storage)
-    if DEBUG and credentials.access_token_expired:
+    if config.DEBUG and credentials.access_token_expired:
         print 'Credentials expired'
     http = credentials.authorize(http)
 
