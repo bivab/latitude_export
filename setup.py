@@ -3,7 +3,6 @@ from os.path import join, dirname
 
 requirements = open(join(dirname(__file__), 'requirements.txt')).readlines(),
 description = open(join(dirname(__file__), 'README.markdown')).read()
-import pdb; pdb.set_trace()
 
 setup(
     name='latitude',
