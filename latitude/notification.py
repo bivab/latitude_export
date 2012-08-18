@@ -68,3 +68,8 @@ _notifiers = []
 for c in [TerminalNotification, ProwlNotification, PushoverNotification]:
     if c.name in config.get('LatitudeExporter', 'notifications'):
        _notifiers.append(c())
+
+def exception_notification(e):
+    import traceback
+    for n in _notifiers:
+        n.send(traceback.format_exc(), 'Failed')
