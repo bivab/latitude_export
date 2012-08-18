@@ -1,6 +1,7 @@
 import ConfigParser
 import os
-from os.path import expanduser, dirname, join, exists, realpath, isdir
+from os.path import expanduser, join, exists, isdir
+
 
 class Settings(object):
     def __init__(self, config_file=None):
@@ -47,13 +48,15 @@ class Settings(object):
     def exporters(self):
         exporters = self.config.get('LatitudeExporter', 'exporters')
         exporters = [x.strip() for x in exporters.split(',')]
-        return [__import__('latitude.exporter.%s' % e, {}, {}, ['exporter']).exporter
-                                                for e in exporters]
+        return [
+            __import__('latitude.exporter.%s' % e,
+                    {}, {}, ['exporter']).exporter for e in exporters]
+
     def formats(self):
         formats = self.config.get('LatitudeExporter', 'formats')
         formats = [x.strip() for x in formats.split(',')]
-        return [__import__('latitude.data.%s' % f, {}, {}, ['format']).format
-                                                for f in formats]
+        return [__import__('latitude.data.%s' % f,
+                    {}, {}, ['format']).format for f in formats]
 
     def get_storage_path(self, storage):
         dirname = self.datadir

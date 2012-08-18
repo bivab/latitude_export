@@ -1,6 +1,6 @@
 from latitude.exporter import Exporter
 from latitude.config import dropbox as db
-from oauth import oauth
+
 
 class Dropbox(Exporter):
     def __init__(self):

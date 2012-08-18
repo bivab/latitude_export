@@ -10,6 +10,7 @@ import xml.etree.ElementTree as ET
 local_tz = config.get('KML', 'timezone')
 local_tz = pytz.timezone(local_tz)
 
+
 class KML(Data):
     extension = 'kml'
 
@@ -27,13 +28,12 @@ class KML(Data):
         e = ET.SubElement(doc, "name")
         e.text = "Location history for %d"
         e = ET.SubElement(doc, "open")
-        e.text= '1'
+        e.text = '1'
         ET.SubElement(doc, "description")
         self.build_stylemap(doc)
         self.build_styles(doc)
         self.build_placemark(doc)
         return ET.ElementTree(kml)
-
 
     def build_stylemap(self, root):
         e = ET.SubElement(root, "StyleMap")
@@ -87,7 +87,7 @@ class KML(Data):
         self.build_track(mark)
 
     def build_track(self, placemark):
-        track = ET.SubElement(placemark, "gx:Track" )
+        track = ET.SubElement(placemark, "gx:Track")
         am = ET.SubElement(track, "altitudeMode")
         am.text = "clampToGround"
         # check if we have items to process
@@ -107,7 +107,7 @@ class KML(Data):
             coord.text = location
 
     def timestamp_to_utctime(self, ts):
-        event = datetime.fromtimestamp(long(ts)/1000)
+        event = datetime.fromtimestamp(long(ts) / 1000)
         event = event - local_tz.utcoffset(event)
         return event.strftime("%Y-%m-%dT%H:%M:%S")
         #return event.strftime("%Y-%m-%dT%H:%M:%S%z")

@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 from latitude.data import Data
+
+
 class JSON(Data):
     extension = 'json'
 

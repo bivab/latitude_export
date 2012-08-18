@@ -2,6 +2,7 @@ import os
 from latitude.config import config
 from latitude.exporter import Exporter
 
+
 class Filesystem(Exporter):
     def __init__(self):
         pass

@@ -1,5 +1,7 @@
 from latitude.config import config
-import httplib, urllib
+import httplib
+import urllib
+
 
 class task_notification(object):
     def __init__(self, task):
@@ -21,6 +23,7 @@ class Notification(object):
     def send(self, message, title=''):
         raise NotImplementedError
 
+
 class ProwlNotification(Notification):
     name = 'prowl'
 
@@ -33,7 +36,8 @@ class ProwlNotification(Notification):
         self.prowl = prowlpy.Prowl(apikey)
 
     def send(self, message, title=''):
-        if title == 'End': return # hack
+        if title == 'End':
+            return  # hack
         self.prowl.add('LatitudeExport', '', message, 1, None)
 
 
@@ -45,7 +49,8 @@ class PushoverNotification(Notification):
         self.usertoken = config.get('Pushover', 'user_token')
 
     def send(self, message, title=''):
-        if title == 'End': return # hack
+        if title == 'End':
+            return  # hack
         conn = httplib.HTTPSConnection("api.pushover.net:443")
         payload = {
             "token": self.apikey,
@@ -56,7 +61,8 @@ class PushoverNotification(Notification):
             payload['title'] = title
         conn.request("POST", "/1/messages",
             urllib.urlencode(payload),
-            { "Content-type": "application/x-www-form-urlencoded" })
+            {"Content-type": "application/x-www-form-urlencoded"})
+
 
 class TerminalNotification(Notification):
     name = 'terminal'
@@ -67,7 +73,8 @@ class TerminalNotification(Notification):
 _notifiers = []
 for c in [TerminalNotification, ProwlNotification, PushoverNotification]:
     if c.name in config.get('LatitudeExporter', 'notifications'):
-       _notifiers.append(c())
+        _notifiers.append(c())
+
 
 def exception_notification(e):
     import traceback

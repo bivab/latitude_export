@@ -1,5 +1,5 @@
 from __future__ import absolute_import
-from dropbox import client, rest, session
+from dropbox import client, session
 from latitude.config import config
 
 import json
@@ -9,16 +9,18 @@ APP_KEY = config.get('Dropbox', 'app_key')
 APP_SECRET = config.get('Dropbox', 'app_secret')
 ACCESS_TYPE = config.get('Dropbox', 'access_type')
 
+
 def get_client():
     sess = get_session()
     return client.DropboxClient(sess)
+
 
 def load_stored_token():
     path = config.get_storage_path(config.get('Dropbox', 'storage'))
     if not os.path.isfile(path):
         return
     with open(path, 'r') as f:
-        token =json.loads(f.read())
+        token = json.loads(f.read())
     return token
 
 

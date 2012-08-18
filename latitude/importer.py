@@ -1,8 +1,7 @@
 from datetime import date, timedelta
 from latitude.config import config
 from latitude.client import Latitude
-from latitude.data.json import JSON
-from latitude.data.kml import KML
+
 
 def dates(start, end, step=None):
     """Generator that yields date objects correspondig to all all steps given
@@ -16,6 +15,7 @@ def dates(start, end, step=None):
         yield current
         current += step
 
+
 class Importer(object):
     exporters = [cls() for cls in config.exporters()]
     formats = config.formats()
@@ -25,6 +25,7 @@ class Importer(object):
 
     def run(self):
         raise NotImplementedError
+
 
 class BatchImporter(Importer):
     """Import all google latitude information
@@ -48,16 +49,17 @@ class BatchImporter(Importer):
                 for e in self.exporters:
                     e.write(d)
 
+
 class YesterdayImporter(Importer):
     """Import the Google latitude location information
     for the previous day and"""
 
     def message(self):
         return 'Runnig import for yesterdays locations'
+
     def run(self):
         some_date = date.today() - timedelta(days=1)
         locations = Latitude().locations(some_date)
         for d in [cls(locations, some_date) for cls in self.formats]:
             for e in self.exporters:
                 e.write(d)
-

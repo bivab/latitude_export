@@ -12,6 +12,7 @@ gflags.DEFINE_string('config',
                     'Configuration file',
                     short_name='c')
 
+
 def setup_config():
     from latitude import config
     if getattr(gflags.FLAGS, 'config') is not None:
@@ -19,6 +20,7 @@ def setup_config():
         config.setup(config_file)
     else:
         config.setup()
+
 
 def run():
     from latitude.importer import BatchImporter, YesterdayImporter
@@ -29,8 +31,9 @@ def run():
         task = BatchImporter(date)
     else:
         task = YesterdayImporter()
-    with task_notification(task) as _:
+    with task_notification(task):
         task.run()
+
 
 def main(argv):
     # Let the gflags module process the command-line arguments
@@ -42,6 +45,7 @@ def main(argv):
 
     setup_config()
     run()
+
 
 def entry_point():
     try:

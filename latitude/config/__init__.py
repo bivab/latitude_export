@@ -1,6 +1,3 @@
-import os
-import sys
-from os.path import expanduser, dirname, join, exists, isdir
 from latitude.config.settings import Settings
 
 

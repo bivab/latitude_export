@@ -6,13 +6,15 @@ from latitude.config.gdata import setup as gdata_setup, build
 
 class Latitude(object):
     _service = None
+
     def __init__(self):
         if Latitude._service is None:
             gdata_setup()
             Latitude._service = build("latitude", "v1")
+
     def locations(self, date, options=None):
         args = self.build_args(date, options)
-        loc =  Latitude._service.location().list(**args)
+        loc = Latitude._service.location().list(**args)
         return loc.execute()
 
     def build_args(self, date, options=None):
