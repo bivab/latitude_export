@@ -44,7 +44,12 @@ def main(argv):
     run()
 
 def entry_point():
-    main(sys.argv)
+    try:
+        main(sys.argv)
+    except Exception, e:
+        from latitude.notification import exception_notification
+        exception_notification(e)
+        raise
 
 if __name__ == '__main__':
     main(sys.argv)
