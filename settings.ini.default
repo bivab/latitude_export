@@ -26,3 +26,9 @@ debug = false
 
 [Prowl]
 api_key = prowl key
+
+[Pushover]
+api_key = pushover api key
+user_token = push over user token
+default sound = [optinal] sound to play by default
+error sound = [optinal] sound to play in case of an error
