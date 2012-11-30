@@ -1,6 +1,6 @@
 from latitude.config import config
-import httplib
-import urllib
+import requests
+import json
 
 
 class task_notification(object):
@@ -51,17 +51,17 @@ class PushoverNotification(Notification):
     def send(self, message, title=''):
         if title == 'End':
             return  # hack
-        conn = httplib.HTTPSConnection("api.pushover.net:443")
         payload = {
             "token": self.apitoken,
             "user":  self.usertoken,
             "message": message,
         }
+        headers = {"Content-type": "application/x-www-form-urlencoded"}
         if title != '':
             payload['title'] = title
-        conn.request("POST", "/1/messages",
-            urllib.urlencode(payload),
-            {"Content-type": "application/x-www-form-urlencoded"})
+        resp = requests.post('https://api.pushover.net/1/messages.json',
+                        data=payload, headers=headers)
+        resp.raise_for_status()
 
 
 class TerminalNotification(Notification):
