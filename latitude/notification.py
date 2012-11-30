@@ -45,7 +45,7 @@ class PushoverNotification(Notification):
     name = 'pushover'
 
     def __init__(self):
-        self.apikey = config.get('Pushover', 'api_key')
+        self.apitoken = config.get('Pushover', 'api_key')
         self.usertoken = config.get('Pushover', 'user_token')
 
     def send(self, message, title=''):
@@ -53,7 +53,7 @@ class PushoverNotification(Notification):
             return  # hack
         conn = httplib.HTTPSConnection("api.pushover.net:443")
         payload = {
-            "token": self.apikey,
+            "token": self.apitoken,
             "user":  self.usertoken,
             "message": message,
         }
