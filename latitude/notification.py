@@ -47,16 +47,42 @@ class PushoverNotification(Notification):
     def __init__(self):
         self.apitoken = config.get('Pushover', 'api_key')
         self.usertoken = config.get('Pushover', 'user_token')
+        self.default_sound = None
+        self.error_sound = None
+        if config.has_option('Pushover', 'default sound'):
+            self.default_sound = config.get('Pushover', 'default sound')
+        if config.has_option('Pushover', 'error sound'):
+            self.error_sound = config.get('Pushover', 'error sound')
+        self.load_sounds()
+
+    def load_sounds(self):
+        sounds = {}
+        try:
+            resp = requests.get('https://api.pushover.net/1/sounds.json')
+            if resp.status_code == 200:
+                s = json.loads(resp.content)['sounds']
+                sounds = dict((v, k) for k, v in s.iteritems())
+        except requests.exceptions.RequestException:
+            # catch any exception caused by a bad request and ignore it
+            pass
+        finally:
+            self.sounds = sounds
 
     def send(self, message, title=''):
-        if title == 'End':
-            return  # hack
         payload = {
             "token": self.apitoken,
             "user":  self.usertoken,
             "message": message,
         }
         headers = {"Content-type": "application/x-www-form-urlencoded"}
+        if title == 'End':
+            return  # hack
+        if title == 'Failed' and self.error_sound:
+            assert self.error_sound in self.sounds
+            payload['sound'] = self.sounds[self.error_sound]
+        else:
+            assert self.error_sound in self.sounds
+            payload['sound'] = self.sounds[self.default_sound]
         if title != '':
             payload['title'] = title
         resp = requests.post('https://api.pushover.net/1/messages.json',
