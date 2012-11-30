@@ -42,8 +42,9 @@ class Settings(object):
         #self.config.set('LatitudeExporter', 'datadir', _datadir)
         self.datadir = _datadir
 
-    def get(self, category, key):
-        return self.config.get(category, key)
+    def __getattr__(self, name):
+        # forward missing attributes to config
+        return getattr(self.config, name)
 
     def exporters(self):
         exporters = self.config.get('LatitudeExporter', 'exporters')
