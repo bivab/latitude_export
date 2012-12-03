@@ -9,7 +9,7 @@ user_agent = google-api-client-python-latitude/1.0
 storage = latitude.dat
 
 [Filesystem]
-basepath = ~/some_path/
+basepath = ~/some_path where the output should be stored/
 
 [Dropbox]
 app_key = put your app key here
@@ -18,7 +18,6 @@ access_type = app_folder
 storage = dropbox.dat
 
 [LatitudeExporter]
-datadir = a path where application settings can be stored
 formats = kml, json
 exporters = filesystem, dropbox
 notifications = prowl, terminal

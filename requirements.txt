@@ -1,4 +1,5 @@
 apiclient==1.0.2
+appdirs==1.2.0
 dropbox==1.4
 gdata==2.0.17
 google-api-python-client==1.0c2

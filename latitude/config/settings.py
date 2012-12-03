@@ -1,6 +1,8 @@
 import ConfigParser
 import os
 from os.path import expanduser, join, exists, isdir
+from appdirs import user_data_dir
+from latitude import version as v
 
 
 class Settings(object):
@@ -34,12 +36,12 @@ class Settings(object):
 
     def setup(self):
         # create datadir
-        _datadir = self.config.get('LatitudeExporter', 'datadir')
+        _datadir = user_data_dir(v.__name__,
+                version=v.__version__, appauthor=v.__author__)
         _datadir = expanduser(_datadir)
         if not exists(_datadir):
             os.makedirs(_datadir)
         assert isdir(_datadir)
-        #self.config.set('LatitudeExporter', 'datadir', _datadir)
         self.datadir = _datadir
 
     def __getattr__(self, name):
