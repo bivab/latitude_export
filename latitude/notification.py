@@ -80,8 +80,8 @@ class PushoverNotification(Notification):
         if title == 'Failed' and self.error_sound:
             assert self.error_sound in self.sounds
             payload['sound'] = self.sounds[self.error_sound]
-        else:
-            assert self.error_sound in self.sounds
+        elif self.default_sound:
+            assert self.default_sound in self.sounds
             payload['sound'] = self.sounds[self.default_sound]
         if title != '':
             payload['title'] = title
