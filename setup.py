@@ -6,7 +6,7 @@ description = open(join(dirname(__file__), 'README.markdown')).read()
 
 setup(
     name='latitude',
-    version='1.3',
+    version='1.4',
     packages=find_packages(),
     long_description=description,
     entry_points={
