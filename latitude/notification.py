@@ -61,7 +61,7 @@ class PushoverNotification(Notification):
             resp = requests.get('https://api.pushover.net/1/sounds.json')
             if resp.status_code == 200:
                 s = json.loads(resp.content)['sounds']
-                sounds = dict((v, k) for k, v in s.iteritems())
+                sounds = {v:k for k, v in s.iteritems()}
         except requests.exceptions.RequestException:
             # catch any exception caused by a bad request and ignore it
             pass
