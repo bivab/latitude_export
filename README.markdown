@@ -31,6 +31,7 @@ details.
 You need to register the application with Google, and Dropbox in case you want
 to export to Dropbox, the corresponding key and secrets for the applications go
 in the settings.ini file.
+
 To register with google visit https://code.google.com/apis/console/b/0 and
 create the credentials for the Latitude API.
 
