@@ -27,5 +27,6 @@ class Latitude(object):
             'granularity': 'best',
             'min_time': int(start_time),
             'max_time': int(end_time),
+            'max_results': 1000,
         }
         return args
