@@ -58,7 +58,8 @@ class PushoverNotification(Notification):
     def load_sounds(self):
         sounds = {}
         try:
-            resp = requests.get('https://api.pushover.net/1/sounds.json')
+            url = 'https://api.pushover.net/1/sounds.json?token=%s' % self.apitoken
+            resp = requests.get(url)
             if resp.status_code == 200:
                 s = json.loads(resp.content)['sounds']
                 sounds = {v:k for k, v in s.iteritems()}
